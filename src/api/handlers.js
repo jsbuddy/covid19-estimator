@@ -19,22 +19,21 @@ const handlers = {
       ...covid19ImpactEstimator(request.body),
       data: request.body
     });
-    return cb(200, data);
+    return cb(200, data, 'application/xml');
   },
   logs: (request, cb) => {
     if (!request.method.match(/GET|POST/gi)) return cb(405, 'Method not allowed');
-    return cb(200, 'GET  /api/v1/on-covid-19/logs    200   00ms\n', 'text/plain');
-    // return fs.readFile(path.resolve(__dirname, '../logs.txt'), 'utf-8', (err, file) => {
-    //   if (!err) {
-    //     if (file) {
-    //       cb(200, file, 'text/plain');
-    //     } else {
-    //       cb(404, 'No logs');
-    //     }
-    //   } else {
-    //     cb(404, 'No logs');
-    //   }
-    // });
+    return fs.readFile(path.resolve(__dirname, '../logs.txt'), 'utf-8', (err, file) => {
+      if (!err) {
+        if (file) {
+          cb(200, file, 'text/plain');
+        } else {
+          cb(404, 'No logs');
+        }
+      } else {
+        cb(404, 'No logs');
+      }
+    });
   }
 };
 

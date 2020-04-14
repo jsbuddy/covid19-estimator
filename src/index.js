@@ -17,24 +17,28 @@ const server = http.createServer((req, res) => {
     body: ''
   };
 
+  const sendResponse = (code, payload, type = 'application/json') => {
+    let diff = new Date() - timer;
+    diff = diff.toString().length === 1 ? `0${diff}` : diff;
+    const log = (`${request.method}\t/${request.path}\t${code}\t${diff}ms\n`);
+    fs.appendFile(path.resolve(__dirname, 'logs.txt'), log, 'utf8', () => {
+      res.setHeader('Content-Type', type);
+      res.writeHead(code);
+      res.end(type === 'application/json' ? JSON.stringify(payload) : payload);
+    });
+  };
+
   req.on('data', (data) => {
     request.body += decoder.write(data);
   });
   req.on('end', (data) => {
     request.body += decoder.end(data);
-    request.body = JSON.parse(request.body);
-
-    const sendResponse = (code, payload, type = 'application/json') => {
-      let diff = new Date() - timer;
-      diff = diff.toString().length === 1 ? `0${diff}` : diff;
-      const log = (`${request.method}\t/${request.path}\t${code}\t${diff}ms\n`);
-      fs.appendFile(path.resolve(__dirname, 'logs.txt'), log, 'utf8', () => {
-        res.setHeader('Content-Type', type);
-        res.writeHead(code);
-        res.end(type === 'application/json' ? JSON.stringify(payload) : payload);
-      });
-    };
-
+    try {
+      request.body = JSON.parse(request.body);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.log('ERROR', e);
+    }
     switch (request.path) {
       case 'api/v1/on-covid-19':
         return request.method === 'GET'
