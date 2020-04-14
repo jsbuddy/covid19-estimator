@@ -105,6 +105,7 @@ build
 .tern-port
 
 package-lock.json
+yarn.lock
 
 # IDE files
 .idea
