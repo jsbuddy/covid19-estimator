@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Covid19 Estimator</title>
-    <link rel="preconnect" as="style" onload="this.onload=null;this.rel='stylesheet'"
+    <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"
           href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;600&display=swap">
     <style>
         * {
@@ -233,20 +233,20 @@
                     <span class="label">Time to elapse</span>
                     <span class="box"></span>
                 </label>
+                <!--                <label class="input-wrap">-->
+                <!--                    <input type="text" name='periodType' placeholder=" " data-period-type required/>-->
+                <!--                    <span class="label">Period type</span>-->
+                <!--                    <span class="box"></span>-->
+                <!--                </label>-->
                 <label class="input-wrap">
-                    <input type="text" name='periodType' placeholder=" " data-period-type required/>
+                    <select name='periodType' data-period-type required>
+                        <option selected disabled>Select period type</option>
+                        <option value="days">Days</option>
+                        <option value="weeks">Weeks</option>
+                        <option value="months">Months</option>
+                    </select>
                     <span class="label">Period type</span>
-                    <span class="box"></span>
                 </label>
-<!--                <label class="input-wrap">-->
-<!--                    <select name='periodType' data-period-type required>-->
-<!--                        <option value="days">Select period type</option>-->
-<!--                        <option value="days">Days</option>-->
-<!--                        <option value="weeks">Weeks</option>-->
-<!--                        <option value="months">Months</option>-->
-<!--                    </select>-->
-<!--                    <span class="label">Period type</span>-->
-<!--                </label>-->
             </div>
             <label class="input-wrap">
                 <select name='regionName' required>
