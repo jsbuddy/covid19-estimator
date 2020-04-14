@@ -4,6 +4,9 @@ import covid19ImpactEstimator from '../estimator';
 import { OBJtoXML } from '../utils';
 
 const handlers = {
+  welcome: (request, cb) => {
+    return cb(200, 'Welcome to simple-covid19-estimator api');
+  },
   json: (request, cb) => {
     if (request.method === 'GET') return cb(405, 'Method not allowed');
     const data = {

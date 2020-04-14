@@ -36,7 +36,9 @@ const server = http.createServer((req, res) => {
 
     switch (request.path) {
       case 'api/v1/on-covid-19':
-        return handlers.json(request, sendResponse);
+        return request.method === 'GET'
+          ? handlers.welcome(request, sendResponse)
+          : handlers.json(request, sendResponse);
       case 'api/v1/on-covid-19/json':
         return handlers.json(request, sendResponse);
       case 'api/v1/on-covid-19/logs':
