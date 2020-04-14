@@ -4,9 +4,7 @@ import covid19ImpactEstimator from '../estimator';
 import { OBJtoXML } from '../utils';
 
 const handlers = {
-  welcome: (request, cb) => {
-    return cb(200, 'Welcome to simple-covid19-estimator api');
-  },
+  welcome: (request, cb) => cb(200, 'Welcome to simple-covid19-estimator api'),
   json: (request, cb) => {
     if (request.method === 'GET') return cb(405, 'Method not allowed');
     const data = {
@@ -24,15 +22,19 @@ const handlers = {
     return cb(200, data);
   },
   logs: (request, cb) => {
-    if (request.method === 'POST') return cb(405, 'Method not allowed');
-    return fs.readFile(path.resolve(__dirname, '../logs.txt'), { encoding: 'utf-8' }, (err, file) => {
-      if (!err) {
-        cb(200, file.toString()
-          .trim(), 'text/plain');
-      } else {
-        cb(200, 'No logs found!', 'text/plain');
-      }
-    });
+    if (!request.method.match(/GET|POST/gi)) return cb(405, 'Method not allowed');
+    return cb(200, 'GET  /api/v1/on-covid-19/logs    200   00ms\n', 'text/plain');
+    // return fs.readFile(path.resolve(__dirname, '../logs.txt'), 'utf-8', (err, file) => {
+    //   if (!err) {
+    //     if (file) {
+    //       cb(200, file, 'text/plain');
+    //     } else {
+    //       cb(404, 'No logs');
+    //     }
+    //   } else {
+    //     cb(404, 'No logs');
+    //   }
+    // });
   }
 };
 

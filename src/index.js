@@ -25,9 +25,10 @@ const server = http.createServer((req, res) => {
     request.body = JSON.parse(request.body);
 
     const sendResponse = (code, payload, type = 'application/json') => {
-      const log = (`\n${request.method}\t${request.path}\t${code}\t${new Date() - timer}ms`);
-      fs.appendFile(path.resolve(__dirname, 'logs.txt'), log, { encoding: 'utf-8' }, (err) => {
-        if (err) throw err;
+      let diff = new Date() - timer;
+      diff = diff.toString().length === 1 ? `0${diff}` : diff;
+      const log = (`${request.method}\t/${request.path}\t${code}\t${diff}ms\n`);
+      fs.appendFile(path.resolve(__dirname, 'logs.txt'), log, 'utf8', () => {
         res.setHeader('Content-Type', type);
         res.writeHead(code);
         res.end(type === 'application/json' ? JSON.stringify(payload) : payload);
